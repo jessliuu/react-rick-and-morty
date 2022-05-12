@@ -1,6 +1,6 @@
 import React from "react";
 
-import Button from "./Button";
+import Input from "react-bootstrap/Input";
 
 const Header = ({ title }) => {
   return (
