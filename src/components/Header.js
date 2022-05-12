@@ -1,13 +1,27 @@
 import React from "react";
+import { Navbar, Form } from "react-bootstrap";
 
-import Input from "react-bootstrap/Input";
-
-const Header = ({ title }) => {
+const Header = (props) => {
   return (
-    <div>
-      <h1>{title}</h1>
-      <Button color="green" text="Add" />
-    </div>
+    <>
+      <Navbar
+        className="navbar-light bg-light justify-content-center"
+        style={{ padding: 40 }}
+      >
+        <Navbar.Brand href="#home">LOGO</Navbar.Brand>
+
+        {/* <Nav className="ml-auto"> */}
+        <Form inline>
+          <Form.Control
+            variant="outline-success"
+            type="text"
+            placeholder="Search"
+            className="mr-sm-2"
+          />
+        </Form>
+        {/* </Nav> */}
+      </Navbar>
+    </>
   );
 };
 
