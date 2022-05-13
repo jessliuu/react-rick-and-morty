@@ -8,6 +8,7 @@ const Character = (props) => {
   const name = props.info.name;
   const species = props.info.species;
   const image = props.info.image;
+  const status = props.info.status;
   //   console.log(props);
 
   const [showModal, setShowModal] = useState(false);
@@ -34,9 +35,12 @@ const Character = (props) => {
             </Card.Body>
           </div>
         </div>
-        {showModal && <Modal setShowModal={setShowModal} species={species} />}
       </Card>
+      {showModal && (
+        <Modal setShowModal={setShowModal} species={species} status={status} />
+      )}
     </Col>
+
     // <div key={id}>
     //   <p>
     //     {name}, {species}

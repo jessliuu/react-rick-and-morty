@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Navbar, Form } from "react-bootstrap";
+import { Navbar, Form, Card, Button } from "react-bootstrap";
 import Character from "./Character";
 
 function Characters() {
   const [characters, setCharacters] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
 
   const fetchCharacters = async () => {
     const response = await fetch("https://rickandmortyapi.com/api/character/");
@@ -13,6 +14,36 @@ function Characters() {
   };
   useEffect(() => {
     fetchCharacters();
+  }, []);
+
+  const fetchNextPage = async () => {
+    const responseNP = await fetch(
+      `https://rickandmortyapi.com/api/character/?page=${currentPage + 1}`
+    );
+    const dataNP = await responseNP.json();
+    console.log(dataNP);
+    setCharacters(dataNP.results);
+    setCurrentPage(currentPage + 1);
+  };
+
+  useEffect(() => {
+    fetchNextPage();
+  }, []);
+
+  const fetchPrevPage = async () => {
+    if (currentPage !== 1) {
+      const responsePP = await fetch(
+        `https://rickandmortyapi.com/api/character/?page=${currentPage - 1}`
+      );
+      const dataPP = await responsePP.json();
+      console.log(dataPP);
+      setCharacters(dataPP.results);
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  useEffect(() => {
+    fetchPrevPage();
   }, []);
 
   return (
@@ -39,41 +70,16 @@ function Characters() {
         characters.map((character) => {
           return <Character info={character} />;
         })}
+
+      <Card.Footer
+        className="bg-light justify-content-around"
+        style={{ padding: 40, textAlign: "center" }}
+      >
+        <Button onClick={() => fetchPrevPage()}>Backward</Button>
+        <Button onClick={() => fetchNextPage()}>Next</Button>
+      </Card.Footer>
     </>
   );
 }
-// <Character info={ id, name, species, image}/>
-// const { id, name, species } = character;
-// const { id, image, name, species } = character;
-// return (
-// <Col key={id}>
-//   <Card style={{ width: "18rem" }} className="flip-card">
-//     <div className="flip-card-inner">
-//       <div className="flip-card-front">
-//         <Card.Img variant="top" src={image} />
-//       </div>
-//       <div className="flip-card-back">
-//         <Card.Body>
-//           <Card.Title>{name} </Card.Title>
-
-//           <Card.Text>
-//             <button
-//             // onClick={() => {
-//             //   setShowModal(true);
-//             // }}
-//             >
-//               Learn More
-//             </button>
-//           </Card.Text>
-//         </Card.Body>
-//       </div>
-//     </div>
-//     {/* {showModal && (
-//       <Modal setShowModal={setShowModal} species={species} />
-//     )} */}
-//   </Card>
-// </Col>
-//   );
-// })}
 
 export default Characters;
