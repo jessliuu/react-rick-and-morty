@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Card } from "react-bootstrap";
+import { Col, Card, Button } from "react-bootstrap";
 import Modal from "./Modal";
 import { useState } from "react";
 
@@ -14,30 +14,37 @@ const Character = (props) => {
   const [showModal, setShowModal] = useState(false);
   return (
     <Col key={id}>
-      <Card style={{ width: "18rem" }} className="flip-card">
+      <Card style={{ width: "16rem" }} className="flip-card">
         <div className="flip-card-inner">
-          <div className="flip-card-front">
+          <div className="flip-card-front bg-info">
             <Card.Img variant="top" src={image} />
           </div>
-          <div className="flip-card-back">
+          <div className="flip-card-back bg-info">
             <Card.Body>
               <Card.Title>{name} </Card.Title>
 
               <Card.Text>
-                <button
+                <Button
+                  variant="light"
                   onClick={() => {
                     setShowModal(true);
                   }}
                 >
                   Learn More
-                </button>
+                </Button>
               </Card.Text>
             </Card.Body>
           </div>
         </div>
       </Card>
       {showModal && (
-        <Modal setShowModal={setShowModal} species={species} status={status} />
+        <Modal
+          setShowModal={setShowModal}
+          species={species}
+          status={status}
+          name={name}
+          image={image}
+        />
       )}
     </Col>
 

@@ -2,11 +2,15 @@
   width: 100vw;
   height: 100vh;
   background-color: rgba(200, 200, 200);
+  background-color: rgba(0, 0, 0, 0.4);
   position: fixed;
   display: flex;
-
+  overflow: auto;
   justify-content: center;
   align-items: center;
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
 }
 
 .modalContainer {
@@ -29,6 +33,10 @@
 .titleCloseBtn {
   display: flex;
   justify-content: flex-end;
+}
+
+.flip-card {
+  border: 2px #8bcf21 !important;
 }
 
 .titleCloseBtn button {

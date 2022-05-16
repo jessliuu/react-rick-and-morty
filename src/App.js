@@ -5,17 +5,13 @@ import Header from "./components/Header";
 import "./index.css";
 // import Container from "react-bootstrap/Container";
 
-import { Row } from "react-bootstrap";
-
 function App() {
   return (
     <div>
       {/* <Modal /> */}
       {/* <Header title="hello" charname="Rick" /> */}
 
-      <Row>
-        <Characters />
-      </Row>
+      <Characters />
     </div>
   );
 }

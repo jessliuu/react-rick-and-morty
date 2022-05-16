@@ -1,15 +1,23 @@
 import React from "react";
-// import "./Modal.css";
+import { Card } from "react-bootstrap";
+import "./Modal.css";
+import "../index.css";
 
 const Modal = (props) => {
-  const { species, setShowModal, status } = props;
+  const { name, image, species, setShowModal, status } = props;
   // const openModal =
   return (
-    <div className="modalBackground">
+    <div onClick={() => setShowModal(false)} className="modalBackground">
       <div className="modalContainer">
         <div className="titleCloseBtn">
           <button onClick={() => setShowModal(false)}>X</button>
         </div>
+        <h4>{name}</h4>
+        <Card
+          style={{ width: "16rem", alignSelf: "center", marginBottom: "4px" }}
+        >
+          <Card.Img variant="top" src={image} />
+        </Card>
         <div className="modalPart1">Species: {species}</div>
         <div className="modalPart2">Status: {status} </div>
       </div>
