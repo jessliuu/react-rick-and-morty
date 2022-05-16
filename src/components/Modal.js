@@ -18,8 +18,18 @@ const Modal = (props) => {
         >
           <Card.Img variant="top" src={image} />
         </Card>
-        <div className="modalPart1">Species: {species}</div>
-        <div className="modalPart2">Status: {status} </div>
+        <div
+          className="modalPart1"
+          style={{ alignSelf: "center", marginBottom: "4px" }}
+        >
+          Species: {species}
+        </div>
+        <div
+          className="modalPart2"
+          style={{ alignSelf: "center", marginBottom: "4px" }}
+        >
+          Status: {status}{" "}
+        </div>
       </div>
     </div>
   );

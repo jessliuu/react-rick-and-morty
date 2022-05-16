@@ -5,7 +5,7 @@ import { Row } from "react-bootstrap";
 
 function Characters() {
   const [characters, setCharacters] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+
   const [count, setCount] = useState(1);
   const [myInput, setMyInput] = useState(null);
   const [filteredResults, setFilteredResults] = useState();
@@ -16,67 +16,43 @@ function Characters() {
     console.log(data.results);
     setCharacters(data.results);
     setFilteredResults(data.results);
+    console.log(count);
   };
   useEffect(() => {
     fetchCharacters();
   }, []);
 
-  const fetchNextPage = async () => {
-    const responseNP = await fetch(
-      `https://rickandmortyapi.com/api/character/?page=${currentPage + 1}`
-    );
-    const dataNP = await responseNP.json();
-    console.log(dataNP);
-    setCharacters(dataNP.results);
-    setCurrentPage(currentPage + 1);
-    setFilteredResults(dataNP.results);
-  };
-
-  useEffect(() => {
-    fetchNextPage();
-  }, []);
-
-  const fetchPrevPage = async () => {
-    if (currentPage !== 1) {
-      const responsePP = await fetch(
-        `https://rickandmortyapi.com/api/character/?page=${currentPage - 1}`
-      );
-      const dataPP = await responsePP.json();
-      console.log(dataPP);
-      setCharacters(dataPP.results);
-      setFilteredResults(dataPP.results);
-      setCurrentPage(currentPage - 1);
-      console.log("current page", currentPage);
-    }
-  };
-
-  useEffect(() => {
-    fetchPrevPage();
-  }, []);
-
-  const changeCounter = (event) => {
+  const changeCounter = async (event) => {
     if (event.target.value === "next") {
       setCount(count + 1);
+      const responseNP = await fetch(
+        `https://rickandmortyapi.com/api/character/?page=${count + 1}`
+      );
+      const dataNP = await responseNP.json();
+      console.log(dataNP);
+      setCharacters(dataNP.results);
+      setFilteredResults(dataNP.results);
     } else {
-      setCount(count - 1);
+      if (count !== 1) {
+        setCount(count - 1);
+        const responsePP = await fetch(
+          `https://rickandmortyapi.com/api/character/?page=${count - 1}`
+        );
+        const dataPP = await responsePP.json();
+        console.log(dataPP);
+        setCharacters(dataPP.results);
+        setFilteredResults(dataPP.results);
+      }
     }
-    console.log(count);
   };
 
   const onChangeInput = (event) => {
     setMyInput(event.target.value);
-    // let filtered = characters.filter((r) => {
-    //   return r.name.includes(myInput);
-    // });
-    // setFilteredResults(filtered);
-    // console.log(filtered);
   };
-
-  // const [results, setResults] = useState(characters);
 
   const filtered = () => {
     const results = characters.filter((r) => {
-      return r.name.includes(myInput);
+      return r.name.toLowerCase().includes(myInput.toLowerCase());
     });
     setFilteredResults(results);
   };
@@ -120,14 +96,15 @@ function Characters() {
         style={{
           padding: 40,
           textAlign: "center",
-          alignContent: "flex-end",
+          display: "flex",
+          justifyContent: "space-evenly",
           backgroundColor: "#8BCF21",
         }}
       >
-        <Button variant="light" value="prev" onClick={fetchPrevPage}>
+        <Button variant="light" value="prev" onClick={changeCounter}>
           Backward
         </Button>
-        <Button variant="light" value="next" onClick={fetchNextPage}>
+        <Button variant="light" value="next" onClick={changeCounter}>
           Next
         </Button>
       </Card.Footer>
